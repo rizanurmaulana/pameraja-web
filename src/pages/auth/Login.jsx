@@ -1,4 +1,4 @@
-import Navbar from '@/components/navbar';
+import Navbar from '@/components/Navbar';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -18,7 +18,7 @@ const Login = () => {
     <>
       <Navbar />
 
-      <section className='flex justify-center items-center min-h-screen'>
+      <section className='flex justify-center items-center h-[calc(100vh-4rem)]'>
         <Card className='w-[350px] shadow-none'>
           <CardHeader className='items-center'>
             <CardTitle className='text-2xl'>Login</CardTitle>
@@ -53,7 +53,7 @@ const Login = () => {
             <CardDescription>
               Don't have an account?{' '}
               <Link
-                className='text-neutral-950 font-medium hover:underline'
+                className='text-foreground font-medium hover:underline underline-offset-4'
                 to='/auth/register'
               >
                 Register

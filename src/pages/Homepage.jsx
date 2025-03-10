@@ -1,7 +1,8 @@
+import React, { useState } from 'react';
+
 import Navbar from '@/components/Navbar';
 import ProjectCard from '@/components/ProjectCard';
-
-import React from 'react';
+import SearchInput from '@/components/SearchInput';
 
 const projects = [
   {
@@ -162,32 +163,48 @@ const projects = [
 ];
 
 const Homepage = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredProjects = projects.filter(
+    (project) =>
+      project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      project.author.name.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
+
   return (
     <>
       <Navbar />
 
-      <section className='max-w-7xl mx-auto pt-10 sm:pt-0 px-4 xl:px-0 mb-10'>
+      <section className='max-w-7xl mx-auto pt-10 px-4 xl:px-0 mb-10'>
         <div className='flex justify-center items-center min-h-64'>
           <div className='text-center'>
             <h1 className='text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-4'>
               Show Off Your Project, Bro!
             </h1>
-            <p className='text-muted-foreground'>
+            <p className='text-muted-foreground mb-10'>
               Punya proyek keren? Jangan cuma disimpen di laptop!{' '}
               <br className='hidden md:block' /> Upload di Pameraja, biar makin
               banyak yang lihat, apresiasi, dan kasih feedback.{' '}
               <br className='hidden md:block' /> No project left unseen, let's
               flex your creativity!
             </p>
+            <SearchInput
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
           </div>
         </div>
       </section>
 
       <section className='max-w-7xl mx-auto px-4 xl:px-0 mb-10'>
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5'>
-          {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 place-items-center gap-5'>
+          {filteredProjects.length > 0 ? (
+            filteredProjects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))
+          ) : (
+            <p className='col-span-3'>Project tidak ditemukan.</p>
+          )}
         </div>
       </section>
     </>
